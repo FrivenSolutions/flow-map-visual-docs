@@ -10,7 +10,9 @@ published. See the [terms of use](https://frivensolutions.github.io/flow-map-vis
 
 The split exists because AppSource requires publicly reachable URLs for the privacy policy, help
 documentation and support, and GitHub Pages only serves public repositories on the free tier.
-Issues here are the product's public support channel.
+
+**Support runs to support@friven.dev**, not through this repository's issues — see
+[the support page](https://frivensolutions.github.io/flow-map-visual-docs/support.html).
 
 ## Files
 
@@ -18,6 +20,7 @@ Issues here are the product's public support channel.
 |---|---|
 | `index.html` | Landing page |
 | `guide.html` | User guide — fields, formatting, licensed features |
+| `support.html` | Support contact and what to include in a report |
 | `privacy.html` | Privacy policy (required by AppSource) |
 | `terms.html` | Terms of use / EULA |
 | `style.css` | Shared styling, light and dark |
