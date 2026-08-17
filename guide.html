@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>User guide — Flow Map</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<main>
+  <p class="crumb"><a href="./">Flow Map</a></p>
+  <h1>User guide</h1>
+
+  <h2>Getting started</h2>
+  <p>Five fields are required. Everything else is optional.</p>
+  <table>
+    <tr><th>Field</th><th>What it does</th></tr>
+    <tr><td>Origin Latitude<br>Origin Longitude</td><td>Where each flow starts. Numeric.</td></tr>
+    <tr><td>Destination Latitude<br>Destination Longitude</td><td>Where it ends. Numeric.</td></tr>
+    <tr><td>Arrow Thickness</td><td>The measure driving how thick each arrow is drawn.</td></tr>
+  </table>
+
+  <p>Add <strong>Origin</strong> and <strong>Destination</strong> as text fields to get place names
+  in tooltips and for screen readers; without them the visual falls back to showing raw coordinates.
+  Add <strong>Legend</strong> to colour flows by category, and <strong>Tooltips</strong> for any
+  extra fields you want on hover.</p>
+
+  <p>Rows sharing an origin, destination and legend category are combined into one arrow, with their
+  values summed.</p>
+
+  <h2>Arrows</h2>
+  <p>Three styles, on the <em>Arrows</em> card:</p>
+  <table>
+    <tr><th>Style</th><th>Shape</th><th>How direction reads</th></tr>
+    <tr><td>Directional <em>(default)</em></td><td>Constant-width shaft ending in an arrowhead</td><td>The arrowhead</td></tr>
+    <tr><td>Taper</td><td>Full width at the origin, narrowing toward the destination</td><td>The taper itself</td></tr>
+    <tr><td>Line</td><td>Constant width end to end</td><td>No direction cue</td></tr>
+  </table>
+  <p>Also here: colour, minimum and maximum thickness in pixels, opacity, and curve intensity. Curve
+  intensity is what separates an A-to-B flow from its B-to-A counterpart — at zero they lie on top of
+  each other.</p>
+
+  <h2>Bubbles</h2>
+  <p>Markers at each end. Origins and destinations get their own colour, shape and size — circle,
+  square, star, pin or teardrop.</p>
+  <p><strong>Combine shared locations</strong> is on by default and matters more than it sounds. A
+  hub is usually both an origin and a destination, and drawing it as two circles on identical
+  coordinates is indistinguishable from one circle — hiding the fact that it is a hub. Combined, such
+  a place renders as a single marker split into wedges: origin colour for outbound, destination
+  colour for inbound, sized by its total throughput.</p>
+  <p>Bind <strong>Origin Size</strong> or <strong>Destination Size</strong> to size markers from
+  data. The size control then becomes the <em>maximum</em> radius and a minimum appears; markers
+  scale on a square-root scale, so area rather than radius tracks the measure.</p>
+
+  <h2>Basemap and labels</h2>
+  <p>Land, country borders, US state borders, US county borders (off by default — three thousand
+  polygons is a lot of ink), oceans and lakes, each with their own colours.</p>
+  <p><strong>Center longitude</strong> picks the meridian in the middle of the world, which is the
+  same as choosing where the map is cut. Leave it at 0 for a Greenwich-centred map; set 180 for a
+  Pacific-centred one.</p>
+  <p>Country, US state and city labels are each independently switchable, with their own text size,
+  bold, italic and underline. <strong>Density</strong> controls how much clearance each label claims:
+  zoomed out, a crowded region only has room for its most significant names; zoom in and more fit.</p>
+
+  <h2>Zooming</h2>
+  <p>Scroll to zoom, drag to pan. Arrows and markers hold a constant size on screen as you zoom, so
+  zooming genuinely pulls a crowded region apart instead of magnifying the crowding. Zoom and pan are
+  both bounded by the map, so you cannot shrink it into a corner or drag off into empty space.</p>
+
+  <h2 id="licensed">Licensed features</h2>
+  <p>A single licence unlocks all of the following. They render in full so you can evaluate them; a
+  watermark appears if you publish a report using them without a licence.</p>
+
+  <h3>Great circle paths</h3>
+  <p>On the <em>Arrows</em> card, set <strong>Path</strong> to Great circle for true
+  shortest-distance routes, including flows crossing the antimeridian.</p>
+
+  <h3>Multi-hop routes</h3>
+  <p>Bind <strong>Route ID</strong> and rows sharing a value chain into one continuous arrow through
+  its waypoints. One row per leg:</p>
+  <table>
+    <tr><th>RouteID</th><th>Leg</th><th>Origin</th><th>Destination</th><th>ArrowThickness</th></tr>
+    <tr><td>R-100</td><td>1</td><td>Chicago</td><td>Denver</td><td>500</td></tr>
+    <tr><td>R-100</td><td>2</td><td>Denver</td><td>Seattle</td><td>500</td></tr>
+    <tr><td>R-100</td><td>3</td><td>Seattle</td><td>Tokyo</td><td>500</td></tr>
+  </table>
+  <p><strong>Leg Order</strong> sequences the hops so the table need not be sorted. A route's
+  thickness is the largest value across its legs, not the sum — the rows above describe one shipment
+  of 500, not 1,500. Waypoints render as combined markers automatically.</p>
+
+  <h3>Animation</h3>
+  <p>Dots travelling along each flow, showing direction as motion. Speed is in screen pixels per
+  second, so the pace holds steady as you zoom. Honours the system reduced-motion setting: the dots
+  are placed once and left still.</p>
+
+  <h3>Timeline playback</h3>
+  <p>Bind <strong>Start Time</strong> and a play/pause strip appears below the map.</p>
+  <p class="note"><strong>Bind the date field itself, not its date hierarchy.</strong> Power BI
+  expands dates to a Year/Quarter/Month/Day hierarchy by default; use the dropdown on the field well
+  to pick the field name instead, or turn off Auto date/time for the file. The visual copes with
+  either, but the plain date gives cleaner step labels.</p>
+  <p><strong>Step by</strong> chooses the grain — Auto, Day, Week, Month, Quarter or Year. The steps
+  are a generated calendar across your data's range, not just the dates that happen to appear in it,
+  so you can animate a whole year from a handful of records.</p>
+  <p>Bind <strong>End Time</strong> and a flow stays on screen for its whole span rather than
+  flashing on for one step — so a contract starting in May and ending in September appears and
+  disappears on the right days.</p>
+  <p><strong>Show</strong> picks the reading: <em>Instant</em> shows what is active at each step;
+  <em>Cumulative</em> builds up everything that has started so far, with arrows thickening as they
+  accumulate.</p>
+  <p>Switching the timeline off shows the whole period at once, with values summed.</p>
+
+  <h3>More than 50 flows</h3>
+  <p>A flow is one lane or one route. A four-leg route counts once, and a lane recorded monthly
+  counts once — the limit measures the picture, not the row count of your model.</p>
+
+  <h2>Notes and limits</h2>
+  <ul>
+    <li>Sub-national detail is US-only. Other countries get national borders and city labels.</li>
+    <li>In Arc mode, a flow crossing the 180° line draws the long way round. Great circle mode
+      handles it correctly.</li>
+    <li>Highlighting (dimming from another visual's selection) is not supported; click-based
+      cross-filtering works in both directions.</li>
+    <li>The interface is English only.</li>
+  </ul>
+
+  <footer><p>Friven Solutions · <a href="mailto:justin@friven.dev">justin@friven.dev</a> ·
+  <a href="https://github.com/FrivenSolutions/flow-map-visual-docs/issues">Report an issue</a></p></footer>
+</main>
+</body>
+</html>
