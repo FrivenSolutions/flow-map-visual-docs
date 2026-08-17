@@ -34,4 +34,4 @@ Settings → Pages → Source: **Deploy from a branch** → `main` / `/ (root)`.
 
 ---
 
-© Friven Solutions · justin@friven.dev
+© Friven Solutions · support@friven.dev
