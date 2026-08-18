@@ -28,6 +28,56 @@
   <p>Rows sharing an origin, destination and legend category are combined into one arrow, with their
   values summed.</p>
 
+  <h2 id="locations">Using place names instead of coordinates</h2>
+  <p>If you don't have latitude and longitude, bind <strong>Origin Location</strong> and
+  <strong>Destination Location</strong> instead. Each takes a single column in this format:</p>
+
+  <pre><code>City|State|Country</code></pre>
+
+  <table>
+    <tr><th>Field</th><th>Rule</th></tr>
+    <tr><td>City</td><td>Required.</td></tr>
+    <tr><td>State</td><td>The state, province or region. Leave it <strong>empty</strong> for
+      countries that have none — the two separators are still required.</td></tr>
+    <tr><td>Country</td><td>Required. An <strong>ISO 3166-1 alpha-3 code</strong>:
+      <code>USA</code>, <code>NLD</code>, <code>KOR</code>, <code>DEU</code>.</td></tr>
+  </table>
+
+  <pre><code>Denver|CO|USA
+Rotterdam||NLD
+London|ON|CAN
+Seoul||KOR</code></pre>
+
+  <p>Separate the fields with a <strong>pipe</strong> (<code>|</code>). Spaces around the
+  separators don't matter, and neither does capitalisation.</p>
+
+  <p><strong>Latitude and longitude always win.</strong> If a row has both coordinates and a
+  location, the coordinates are used. You can mix the two in one dataset — the location column
+  fills in only the rows where coordinates are missing.</p>
+
+  <h3>When rows don't appear</h3>
+  <p>A note at the bottom of the visual reports how many rows could not be located. Hover it to
+  see why. Three usual causes:</p>
+  <ul>
+    <li><strong>The name is ambiguous.</strong> There are five Springfields in the United States,
+      so <code>Springfield||USA</code> is refused rather than guessed at. Add the state:
+      <code>Springfield|IL|USA</code>. The visual never picks one for you.</li>
+    <li><strong>The place is too small.</strong> About 34,000 cities are included, broadly those
+      above 15,000 people. Villages, suburbs and industrial estates are not.</li>
+    <li><strong>The format is wrong.</strong> All three fields must be present even when the state
+      is empty. <code>Denver|USA</code> is two fields and will be refused.</li>
+  </ul>
+
+  <h3>Other forms we accept but don't support</h3>
+  <p>For convenience the visual also understands commas instead of pipes, alpha-2 country codes
+  (<code>US</code>), full country names (<code>United States</code>), and spelled-out states
+  (<code>Colorado</code>).</p>
+  <p><strong>These are a courtesy, not a contract.</strong> They are not guaranteed to keep working
+  between versions, and we can't treat a problem with them as a defect. Commas are the riskiest,
+  because several official country names contain one — <code>Korea, Republic of</code> is four
+  comma-separated fields, not three. If you are building something that has to keep working, use
+  pipes and alpha-3 codes.</p>
+
   <h2>Arrows</h2>
   <p>Three styles, on the <em>Arrows</em> card:</p>
   <table>
@@ -122,7 +172,16 @@
     <li>Highlighting (dimming from another visual's selection) is not supported; click-based
       cross-filtering works in both directions.</li>
     <li>The interface is English only.</li>
+    <li>Place-name lookup covers about 34,000 cities, broadly those above 15,000 people. It runs
+      entirely inside the visual — no geocoding service is called, and no data leaves your
+      report.</li>
   </ul>
+
+  <h2>Data attribution</h2>
+  <p>Place-name lookup uses data from <a href="https://www.geonames.org/">GeoNames</a>, used under
+  <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a>.</p>
+  <p>Map geography comes from <a href="https://www.naturalearthdata.com/">Natural Earth</a> and the
+  US Census Bureau, both public domain. All of it is bundled with the visual and read locally.</p>
 
   <footer><p>Friven Solutions · <a href="mailto:support@friven.dev">support@friven.dev</a> ·
   <a href="support.html">Support</a></p></footer>
