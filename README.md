@@ -22,7 +22,7 @@ documentation and support, and GitHub Pages only serves public repositories on t
 | `guide.html` | User guide — fields, formatting, licensed features |
 | `support.html` | Support contact and what to include in a report |
 | `privacy.html` | Privacy policy (required by AppSource) |
-| `terms.html` | Terms of use / EULA |
+| `terms.html` | Terms of use — points at the Microsoft Standard Contract |
 | `style.css` | Shared styling, light and dark |
 | `.nojekyll` | Serve the HTML as written rather than through Jekyll |
 
